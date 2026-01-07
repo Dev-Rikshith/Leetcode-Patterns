@@ -1,0 +1,272 @@
+Two Pointers — Revision Notes
+1. What the Two Pointers Technique Is
+
+The two pointers technique uses two indices to traverse a data structure in a coordinated manner.
+Instead of checking every possible pair or subarray using nested loops, pointers move based on problem constraints to eliminate unnecessary work.
+
+Primary benefit:
+
+Reduces time complexity, commonly from O(n²) to O(n)
+
+Typical data structures:
+
+Arrays
+
+Strings
+
+Linked lists
+
+2. When to Think About Two Pointers
+
+Two pointers is likely applicable when:
+
+The data is sorted or can be sorted
+
+The problem involves pairs, ranges, or subarrays
+
+There is a monotonic movement (pointers only move forward or inward)
+
+You are asked to optimize brute-force pair checking
+
+The problem requires in-place modification
+
+If a pointer never needs to move backward, two pointers is a strong candidate.
+
+3. Core Two Pointer Patterns
+Pattern 1: Opposite Ends (Left–Right Pointers)
+When to Use
+
+Sorted arrays or strings
+
+Pair-based problems (sum, difference, area, comparison)
+
+Problems where increasing one value requires decreasing another
+
+Structure
+
+One pointer starts at the beginning
+
+One pointer starts at the end
+
+Exactly one pointer moves per iteration
+
+Pointer Movement Logic
+
+Move the pointer that improves the condition
+
+Never move both pointers blindly
+
+Common Problems
+
+Two Sum II
+
+Container With Most Water
+
+Squaring a Sorted Array
+
+Valid Palindrome
+
+Key Insight
+
+Because the array is sorted, you can discard large portions of the search space after each comparison.
+
+Template
+left = 0
+right = n - 1
+
+while left < right:
+    evaluate condition
+    move left OR right
+
+Pattern 2: Same Direction (Fast–Slow Pointers)
+When to Use
+
+Removing or modifying elements in-place
+
+Filtering data while preserving order
+
+Compressing arrays
+
+Cycle detection (linked lists)
+
+Roles
+
+Slow pointer builds the result
+
+Fast pointer explores the array
+
+Guarantees
+
+Order is preserved
+
+Space complexity is O(1)
+
+Common Problems
+
+Remove Duplicates from Sorted Array
+
+Move Zeroes
+
+Remove Element
+
+Linked List Cycle
+
+Key Insight
+
+The slow pointer only moves when a valid element is found.
+
+Template
+slow = 0
+for fast in range(n):
+    if valid(nums[fast]):
+        nums[slow] = nums[fast]
+        slow += 1
+
+Pattern 3: Sliding Window (Dynamic Two Pointers)
+When to Use
+
+Subarray or substring problems
+
+Longest / shortest window conditions
+
+Sum, count, or frequency constraints
+
+Structure
+
+Left pointer shrinks the window
+
+Right pointer expands the window
+
+Window is always contiguous
+
+Key Rule
+
+Expand window first
+
+Shrink only when constraints are violated
+
+Common Problems
+
+Minimum Window Substring
+
+Longest Substring Without Repeating Characters
+
+Longest Repeating Character Replacement
+
+Subarray Sum ≤ K
+
+Key Insight
+
+Each element enters and leaves the window once, guaranteeing linear time.
+
+Template
+left = 0
+for right in range(n):
+    include nums[right]
+    while constraint violated:
+        exclude nums[left]
+        left += 1
+
+Pattern 4: Two Pointers on Strings
+When to Use
+
+Palindrome checks
+
+String reversal
+
+Character comparison from both ends
+
+Skipping invalid characters
+
+Common Problems
+
+Valid Palindrome
+
+Reverse String
+
+Valid Anagram (variation)
+
+Key Insight
+
+Strings behave like arrays; index access is constant time.
+
+Template
+left = 0
+right = len(s) - 1
+
+while left < right:
+    compare s[left], s[right]
+    move pointers
+
+4. Sorting + Two Pointers (Hybrid Pattern)
+When to Use
+
+Unsorted arrays
+
+Pair or triplet problems
+
+Flow
+
+Sort the array
+
+Fix one index
+
+Apply two pointers on the remaining range
+
+Common Problems
+
+3Sum
+
+4Sum
+
+Closest Sum problems
+
+Key Insight
+
+Sorting enables directional decisions that are otherwise impossible.
+
+5. How to Decide Pointer Movement
+
+Always ask:
+
+If the value is too small, which pointer increases it?
+
+If the value is too large, which pointer decreases it?
+
+Does moving this pointer eliminate impossible cases?
+
+If you cannot explain pointer movement logically, the solution is incorrect.
+
+6. Common Mistakes to Avoid
+
+Using two pointers on unsorted data without sorting
+
+Moving both pointers in the same iteration unnecessarily
+
+Forgetting loop conditions (left < right)
+
+Losing track of what each pointer represents
+
+Not understanding why the algorithm is O(n)
+
+7. Time and Space Complexity
+Pattern	Time	Space
+Opposite Ends	O(n)	O(1)
+Fast–Slow	O(n)	O(1)
+Sliding Window	O(n)	O(1) / O(k)
+Sort + Two Pointers	O(n log n)	O(1)
+8. Mental Checklist Before Coding
+
+Is the array sorted?
+
+What does each pointer represent?
+
+Which pointer should move and why?
+
+Can any element be visited more than once?
+
+Does the window grow and shrink correctly?
+
+9. One-Sentence Summary
+
+Two pointers works because each pointer movement eliminates impossible solutions, ensuring linear traversal without redundant checks.
